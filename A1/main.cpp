@@ -7,6 +7,8 @@ class SET {
     private:
     vector<int> v = {};
 
+// Since every time our set remains sorted, we can use binary search technique(in a slightly tweaked way) for some operations.
+    // This one returns index of the key (if present), else returns index of the closest bound.
     int binary_search(int n, int key) {
             int low = 0;
             int high = n - 1;
@@ -30,22 +32,24 @@ class SET {
     public:
     
     SET() {
-
+        // No specific need of constructor
     }
-    
+
+    // This func inserts the data (if not present initially) and returns the size of the set.
     int Insert(int data) {
         int n = v.size();
-        if (n == 0) {
+        if (n == 0) {            // empty vector case
             v.push_back(data);
             return v.size();
         }
 
-        int val = binary_search(n, data);
+        int val = binary_search(n, data);    
         
-        if (v[val] == data) {
+        if (v[val] == data) {    // if already present, do nothing, just return the size
             return v.size();
         }
-        if (v[val] > data) {
+        // other cases are straight forward
+        if (v[val] > data) {    
             v.insert(v.begin() + val, data);
             return v.size();
         }
@@ -54,7 +58,9 @@ class SET {
             return v.size(); 
         }
 
-    int Delete(int data) {
+    // This func deletes the data (if present) and returns the size of the set.
+    // Idea is similar to insert func.
+    int Delete(int data) {    
         int n = v.size();
 
         if (n == 0) {
@@ -72,6 +78,7 @@ class SET {
 
     }
 
+    // simple binary search 
     int Belongs_To(int data) {
         if (v.size() == 0) {
             return 0;
@@ -88,11 +95,12 @@ class SET {
         }
     }
 
+// Check pdf for explanation of union and intersection
     int Union(SET &s1) {               
         for (int i = 0; i < v.size(); i++) {
-            s1.Insert(v[i]);
+            s1.Insert(v[i]);    // This will take of duplicate values.
         }
-        return s1.Size();
+        return s1.Size();    // Since s1 is of set type, we cannot use .size() of vector. We have to make another Size() function.
     }
 
     int Intersection(SET s1) {
@@ -113,6 +121,7 @@ class SET {
         return v.size();
     }
 
+// Same as difference of two sets
     int Difference(SET s1) {
         vector<int> ans = {};
         
@@ -128,7 +137,7 @@ class SET {
         return v.size();
     }
     
-
+// Check pdf of these functions
     int Symmetric_Difference(SET &s1) {
         SET ans = s1;
         for (int i = 0; i < v.size(); i++) {
@@ -159,16 +168,16 @@ class SET {
 };
 
 
-
+// Use provided tester.zip to test
+// Check pdf for input instructions.
 
 int main() {
 
 vector<SET> inputs;
 
 int i1;
-// std::cin >> i1;
 
-while(std::cin >> i1) {
+while(std::cin >> i1) {        // This loop will run till inputs are given.
     if (i1 == 1) {
         int m1, m2;
         std::cin >> m1 >> m2;
